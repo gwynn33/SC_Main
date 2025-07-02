@@ -6,6 +6,8 @@ from blueprints.database.database_model import Temp_User_Account,Temp_User_feedb
 
 
 temp_login_bp = Blueprint('temp_login_bp',__name__)
+temp_logout_bp = Blueprint('temp_logout_bp',__name__)
+
 
 @temp_login_bp.route('/User',methods=['GET','POST'])
 def temp_login():
@@ -37,8 +39,9 @@ def temp_login():
             print("Error : ",err)
             import traceback
             traceback.print_exc()
-            return redirect(url_for('main_bp.main'))
+            return "Something Wrong we can't find this account with this cardentials",401
 
+@temp_logout_bp.route('/user_logout')
 def logout():
     logout_user()
     return redirect(url_for('main_bp.main'))

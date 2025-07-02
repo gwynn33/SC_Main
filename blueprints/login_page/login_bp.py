@@ -7,6 +7,7 @@ import flash
 
 
 login_bp = Blueprint('login_bp',__name__)
+logout_bp = Blueprint('logout_bp',__name__)
 
 @login_bp.route('/login',methods=['GET','POST'])
 def login():
@@ -32,6 +33,7 @@ def login():
         return(redirect(url_for('main_bp.main')))
 
 
+@logout_bp.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('main_bp.main'))

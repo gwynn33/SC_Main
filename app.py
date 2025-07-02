@@ -1,6 +1,7 @@
 from blueprints.database.database_model import Admin_Account,Employees,Employee_Asset,Temp_User_Account,Asset_Existence,Temp_User_feedback
 from blueprints.main_page.main_bp import main_bp
 from blueprints.login_page.login_bp import login_bp
+from blueprints.login_page.login_bp import logout_bp
 from blueprints.admin_page.admin_bp import admin_bp
 from blueprints.qr_scanner.scanning_bp import scanning_bp
 from blueprints.permessions.permessions_bp import permessions_bp
@@ -8,6 +9,7 @@ from blueprints.tracking_page.tracking_page_bp import tracking_page_bp
 from blueprints.permessions_form.permession_form import permession_form_bp
 from blueprints.temp_login_user.temp_login_bp import temp_login_bp
 from blueprints.temp_user_page.temp_user_page_bp import temp_user_page_bp
+from blueprints.temp_login_user.temp_login_bp import temp_logout_bp
 from blueprints.database import db 
 from flask import Flask,session
 from flask_migrate import Migrate
@@ -56,6 +58,7 @@ def create_app():
     #routes
     app.register_blueprint(main_bp)
     app.register_blueprint(login_bp)
+    app.register_blueprint(logout_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(permessions_bp)
     app.register_blueprint(scanning_bp)
@@ -63,6 +66,7 @@ def create_app():
     app.register_blueprint(permession_form_bp)
     app.register_blueprint(temp_login_bp)
     app.register_blueprint(temp_user_page_bp)
+    app.register_blueprint(temp_logout_bp)
 
 
     #migrate
