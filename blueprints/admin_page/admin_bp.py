@@ -7,5 +7,7 @@ admin_bp = Blueprint('admin_bp',__name__)
 @admin_bp.route('/admin')
 @login_required
 def admin():
-    username = current_user.admin_username
-    return render_template('admin_page.html',usr=username)
+    if current_user.is_admin:
+        username = current_user.admin_username
+        return render_template('admin_page.html',usr=username)
+    return "Access Denied !",403

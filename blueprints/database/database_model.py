@@ -41,6 +41,7 @@ try:
         admin_email = db.Column(db.String(60))
         admin_username = db.Column(db.String(30),nullable=False)
         admin_password = db.Column(db.String(512),nullable=False)
+        is_admin = db.Column(db.Boolean,default=True,server_default='1')
 
         def set_password(self,password):
             #hash the password and store it 
@@ -73,6 +74,7 @@ try:
         __tablename__ = 'temp_user_account'
         temp_user_id = db.Column(db.Integer,db.ForeignKey('temp_user_informations.temp_user_id'),primary_key=True)
         temp_user_password = db.Column(db.String(512),nullable=False)
+        is_user = db.Column(db.Boolean,default=True,server_default='1')
 
         def set_temacc_password(self,password):
             #making the hashed password and store it 

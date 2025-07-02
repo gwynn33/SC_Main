@@ -35,6 +35,8 @@ def create_app():
     #login Manager
     login_manager = LoginManager()
     login_manager.init_app(app)
+    login_manager.login_view = 'main_bp.main'
+    login_manager.login_message = "Please log in to access this page !"
     
     # ach hadchi ?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @login_manager.user_loader
@@ -71,7 +73,73 @@ def create_app():
 
     #migrate
     migrate = Migrate(app,db)
-    ##Cli commands
+    #Cli commands to avoid sql injection (maybe!)
+    #command to activate admin account!
+    @app.cli.command('activate-admin')
+    @with_appcontext
+    def activate_admin():
+        update_admin = Admin_Account.query.filter(Admin_Account.is_admin == None).update({
+            Admin_Account.is_admin : True
+        })
+        db.session.commit()
+        click.echo("accounts are activated !")
+    #command to activate user account
+    @app.cli.command('activate-user')
+    @click.argument('user_id',type=int)
+    @with_appcontext
+    def activate_user(user_id):
+        if user_id:
+            account_activation  = Temp_User_Account.query.filter_by(temp_user_id=user_id).first()
+            if account_activation:
+                account_activation.is_user = True
+                db.session.commit()
+                click.echo(f"User <{user_id}> is activated !")
+            else:
+                click.echo(f"There is no account with this user ID <{user_id}>")
+        else:
+            click.echo("SOMETHING WENT WRONG VRIFY YOUR INPUT !")
+            """that's means account not found probably or something wrong with Querying the DB it still needs revision """ 
+    
+    #COMMAND TO DEACTIVATE USER ACCOUNT 
+    @app.cli.command('deactivate-user')
+    @click.argument('user_id',type=int)
+    @with_appcontext
+    def deactivate_user(user_id):
+        if user_id:
+            account_deactivation = Temp_User_Account.query.filter_by(temp_user_id=user_id).first()
+            if account_deactivation:
+                account_deactivation.is_user = None
+                db.session.commit()
+                click.echo(f"User <{user_id}> is  deactivated !")
+            else:
+                click.echo(f"There is no account with this user ID <{user_id}>")
+        else:
+            confirm = click.confirm("DO YOU REALLY WANT TO DEACTIVATE ALL THIS ACCOUNTS?" ,abort=True)
+            remove_access_from_all = Temp_User_Account.query.update({Temp_User_Account.is_user : None})
+            db.session.commit()
+            click.echo("ALL THE USERS ACCOUNTS ARE DEACTIVATED !")
+
+
+    #command to deactivate admin accounts / specified one or all of them for (security reasons) !!
+    @app.cli.command('deactivate-admin')
+    @click.option('--email',default=None,help='this option for a specifique admin.')
+    @with_appcontext
+    def deactivate_admin(email):
+        if email:
+            admin = Admin_Account.query.filter_by(admin_email=email).first()
+            if admin:
+                admin.is_admin = None
+                db.session.commit()
+                click.echo("Admin is deactivated successfully !")
+            else:
+                click.echo(f"No admin found with this email : {email}")
+        else:
+            confirmation = click.confirm("DO YOU REALLY WANT TO DEACTIVATE ALL OF THOSE ACCOUNTS?",abort=True)
+            remove_access_from_all = Admin_Account.query.update({Admin_Account.is_admin : None})
+            db.session.commit()
+            click.echo("all the admins are deactivated !")
+
+    #Employee Creation 
     @app.cli.command('create-employee_asset')
     @click.argument('serial')
     @click.argument('emp_id',type=int)
