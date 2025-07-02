@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/media/favicon-32x32.png" type="image/x-icon">
+  <title>Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .bg-leaves {
+      background: url('https://i.pinimg.com/736x/ef/af/52/efaf52936ed244fe0ccf5a08f7cbc46b.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-container {
+      background: rgba(20, 60, 20, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      padding: 2rem 3rem;
+      max-width: 380px;
+      width: 90%;
+      box-shadow: 0 10px 20px rgb(0 0 0 / 0.3);
+      color: white;
+    }
+    .form-heading {
+      font-weight: 700;
+      font-size: 1.75rem;
+      margin-bottom: 0.25rem;
+      text-align: center;
+    }
+    .form-subheading {
+      font-weight: 400;
+      font-size: 0.875rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+      color: #d6e8d6;
+    }
+    .input-field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid #9ad298;
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 1.6rem;
+      padding: 0.25rem 0;
+      transition: border-color 0.3s ease;
+    }
+    .input-field:focus {
+      outline: none;
+      border-bottom-color: #4ade80;
+    }
+    .input-field::placeholder {
+      color: #b6d7a8;
+      font-weight: 300;
+    }
+    .submit-btn {
+      background-color: #4ade80;
+      border-radius: 9999px;
+      padding: 0.5rem 1.75rem;
+      font-weight: 600;
+      color: #114112;
+      width: 100%;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      box-shadow: 0 4px 8px rgb(74 222 128 / 0.5);
+    }
+    .submit-btn:hover {
+      background-color: #22c55e;
+      color: white;
+      box-shadow: 0 6px 12px rgb(34 197 94 / 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-leaves">
+    <form action="{{url_for('temp_login_bp.temp_login')}}" method="post" id="frm1" class="form-container" aria-label="form">
+      <h1 class="form-heading"><span class="special" style="color: olivedrab;">Login</span></h1>
+      <p class="form-subheading">You can add here user's informations.</p>
+      <input id="user_id" type="text" class="input-field" placeholder="User ID" aria-label="User ID" required name="user_id">
+      <input id="user_password" type="password" class="input-field" placeholder="Password" aria-label="password" required name="user_password">
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+  <script>
+    function get_data() {
+      try{
+        const form = document.forms["frm1"];
+        if (!form) {
+          throw new Error("Form not Found !");
+        }
+        const user_data = { 
+          id : form["user_id"].value,
+          password : form["user_password"].value, 
+        };
+        
+        if (!user_data.id || user_data.id < 0) {
+          alert("invalid user ID");
+          return;
+        }
+
+        if (user_data.password.length < 8 ) {
+          alert("password to short");
+          return;
+        }
+
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]+$/;
+        if (!passwordRegex.test(user_data.password)) {
+          alert("This password must contains at least 1 number and one letter ! ")
+          return;
+        }
+        /* Helpful message !*/
+        console.log("Until now there is no errors !");
+
+        // --------------------------------------------------------i need to look at this again !!!        
+        //fetch api again !! just for practice !
+        // fetch('/User', {
+        //   method : "POST",
+        //   headers : {"Content-Type":"application/json"},
+        //   body: JSON.stringify(user_data)
+        // })
+        // .then(resp => resp.json())
+        // .then(data => {
+        //   console.log("server response : ",data)
+        //   if (data.success) {
+        //     console.log("data Sent successfully !");
+        //     return
+        //   }
+        //   else {
+        //     alert(data.message || data.error || "unknown error");
+        //   }
+        // })
+        // .catch(err => {
+        //   console.error(err);
+        // })
+
+      } catch (error) {
+        console.error("Error !: ",error);
+        alert("something wrong !: ",error);
+      };
+    }
+  </script>
+</body>
+</html>

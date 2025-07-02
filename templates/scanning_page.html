@@ -1,0 +1,21 @@
+{% extends "base_html/base1.html" %}
+{% block css_file%}
+    <link rel="stylesheet" href="/css/scanning_page.css">
+{% endblock %}
+{% block title %}Qr Scanner{% endblock %}
+{% block content %}
+    <nav class="nav-bar">
+        <div class="elements">
+            <a href="#"><img src="/media/logo.svg" alt=""></a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div id="camera_container" class="info-container">
+
+        </div>
+    </div>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="/js/scanning_page.js">
+    </script>
+{% endblock %}

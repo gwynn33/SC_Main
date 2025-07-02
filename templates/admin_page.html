@@ -1,0 +1,86 @@
+{% extends "base_html/base1.html" %}
+{% block css_file%}
+    <link rel="stylesheet" href="/css/admin_page.css">
+{% endblock %}
+{% block title %}Admin Hub{% endblock %}
+{% block content %}
+        <nav class="nav-bar">
+        <div class="elements">
+            <a href="{{url_for('main_bp.main')}}"><img src="/media/logo.svg" alt=""></a>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div class="video-container">
+            <video autoplay muted loop playsinline preload="metadata">
+                <source src="/media/nature1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <div class="overlay-gradiant"></div>
+        
+        <div class="title">
+            <h1>Welcome Back <span class="Connect">{{usr}}</span></h1>
+            <p>This is your space to stay on top of everything — track users, manage tasks, and keep operations running smoothly</p>
+            <button class="btn"><a href="{{url_for('scanning_bp.scanning')}}">Scan Qr Code </a></button>
+            <button class="btn1"><a href="{{url_for('permessions_bp.permessions')}}">Permessions</a></button>
+            <button class="btn3"><a href="#">Asset's List</a></button>
+            <button class="btn4"><a href="{{url_for('login_bp.login')}}">Logout</a></button>
+        </div>
+        
+        <div class="scroll-indicator" aria-hidden="true"></div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Syngenta</h3>
+                    <p>We are a leading agriculture company helping to improve global food security by enabling millions of farmers to make better use of available resources.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="YouTube">📺</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Our Solutions</h3>
+                    <ul>
+                        <li><a href="#">Crop Protection</a></li>
+                        <li><a href="#">Seeds & Traits</a></li>
+                        <li><a href="#">Digital Farming</a></li>
+                        <li><a href="#">Biologicals</a></li>
+                        <li><a href="#">Sustainable Agriculture</a></li>
+                        <li><a href="#">Research & Development</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support & Resources</h3>
+                    <ul>
+                        <li><a href="#">Customer Support</a></li>
+                        <li><a href="#">Technical Resources</a></li>
+                        <li><a href="#">Training Programs</a></li>
+                        <li><a href="#">Safety Data Sheets</a></li>
+                        <li><a href="#">Product Labels</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Syngenta. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Accessibility</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,81 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #f5f5dc;
+            overflow-x: hidden;
+            background: url('https://i.pinimg.com/736x/bd/07/5b/bd075be93ba5836f0f547e989b413cbb.jpg');
+            background-size: cover;
+        }
+
+        .nav-bar {
+            background: rgba(218, 222, 216, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .elements img {          
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .elements img:hover {
+            transform: scale(1.05);
+        }
+
+        .main-container {
+            display: flex; 
+            height:100vh;
+            background: #354024;
+            overflow: auto;
+            background-size: cover;
+            background: rgba(30, 30, 30, 0.8);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .info-container {
+            padding: 30px;
+            display: flex;
+            position: absolute;
+            height: 70vh;
+            width: 70vh;
+            background: #354024;
+            border: 3px solid #354024;
+            border-radius: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        button {
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #cfbb99;
+            color: #354024;
+            font-size: 20px;
+        }
+
+        span {
+            font-size: 20px;
+            margin: 20px;
+            color: #cfbb99;
+        }
+        

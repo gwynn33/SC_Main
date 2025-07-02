@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Page{% endblock %}</title>
+    {% block css_file %}{% endblock %}
+    {% block boxicon %}{% endblock %}
+    <link rel="shortcut icon" href="media/favicon-32x32.png" type="image/x-icon">
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>
