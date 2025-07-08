@@ -1,22 +1,37 @@
+// const element = document.getElementById("camera_container__scan_region");
+// element.style.width = "0px";
+//Qr scanner handeling
 function Qrscanner() {
     try {
+        function parsingQrdata(qrtext) {
+            const parts = qrtext.split(',');
+            const obj = {};
+            parts.forEach(part => {
+                const [key, ...rest] = part.split(':');
+                if (key && rest.length > 0) {
+                    obj[key.trim()] = rest.join(':').trim();
+                }
+            });
+            return obj;
+        }
+
         function success_scanning(decodedtext,decodedresult) {
-            const data =  JSON.stringify(decodedtext);
+            const objdata =  parsingQrdata(decodedtext);
                 setTimeout(() => {
                     scanner.clear();
                 }, 4000);
-                alert("Data Requested Successfully !");
+                console.log("Data Requested Successfully !");
                 // fetch api
                 fetch('/scanning',{
                     method:"PUT",
                     headers: {"Content-Type":"application/json"},
-                    body: data
+                    body: JSON.stringify(objdata)
                 })
                 .then(resp => resp.json())
                 .then(qdata => {
                     if (qdata.success) {
                         console.log("data Sent successfully !");
-                        // redirect
+                        showSuccessPopup()
                     }else {
                         alert("something wrong: ",qdata.message || qdata.error || "Unknown Error");
                     }
@@ -39,3 +54,15 @@ function Qrscanner() {
     }
 }
 Qrscanner();
+
+// Function to show popup
+function showSuccessPopup() {
+  document.getElementById('popup-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// Close popup function
+document.getElementById('close-popup').addEventListener('click', function() {
+  document.getElementById('popup-overlay').classList.remove('active');
+  document.body.style.overflow = 'auto';    
+});

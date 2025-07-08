@@ -10,12 +10,14 @@ from blueprints.permessions_form.permession_form import permession_form_bp
 from blueprints.temp_login_user.temp_login_bp import temp_login_bp
 from blueprints.temp_user_page.temp_user_page_bp import temp_user_page_bp
 from blueprints.temp_login_user.temp_login_bp import temp_logout_bp
+from blueprints.user_scanner.user_scanner_bp import user_scanner_bp
 from blueprints.database import db 
 from flask import Flask,session
 from flask_migrate import Migrate
 from flask.cli import with_appcontext
 from flask_login import LoginManager
 import secrets
+from datetime import datetime
 import click
 
 
@@ -69,11 +71,32 @@ def create_app():
     app.register_blueprint(temp_login_bp)
     app.register_blueprint(temp_user_page_bp)
     app.register_blueprint(temp_logout_bp)
+    app.register_blueprint(user_scanner_bp)
 
 
     #migrate
     migrate = Migrate(app,db)
     #Cli commands to avoid sql injection (maybe!)
+    #COMMAND WITH NO SENS JUST TO FIX A LITTLE PROBLEM
+    @app.cli.command('set-admin')
+    @click.argument('identity',type=int)
+    @with_appcontext
+    def set_admin(identity):
+        try:
+            unique_admin = Admin_Account.query.first()
+            if not  unique_admin:
+                raise ValueError("NO ADMIN FOUND!")
+            updated_table = Employees.query.filter_by(employee_id = identity).update({
+                Employees.admin_id : unique_admin.admin_id
+            })
+            db.session.commit()
+            if updated_table:
+                click.echo("THE DUMB COMMAND WORKS!")
+            else:
+                raise ValueError("TABLE IS NOT UPDATED !")
+        except Exception as e:
+            click.echo("Something Wrong!{}".format(e))
+
     #command to activate admin account!
     @app.cli.command('activate-admin')
     @with_appcontext
@@ -146,30 +169,60 @@ def create_app():
     @click.argument('asset_t')
     @click.argument('fdate')
     @click.option('--ldate',default=None,help='last_using_date of asset')
+    #main function
     def create_employee_asset(serial,emp_id,asset_t,fdate,ldate):
+        #function to verify the date format
+        def validate_date(date_str,fieldname):
+            if not date_str:
+                return None
+            
+            try:
+                return datetime.strptime(date_str, '%Y-%m-%d').date()
+            except ValueError:
+                click.echo(f"ERROR : {fieldname} must be in YYYY-MM-DD format")
+                return False
+            
+        validate_fdate = validate_date(fdate,'first_scan_date')
+        if validate_fdate is False:
+            return
+
+        validate_ldate = validate_date(ldate,'last_scan_date')
+        if validate_ldate is False:
+            return
+        
+        #looking for existing data 
         existing_employee_asset = Employee_Asset.query.filter_by(asset_serial=serial,employee_id=emp_id).first()
         if existing_employee_asset:
-            click.echo(f"this asset is Already exits/used by {emp_id}")
+            click.echo(f"this asset is Already exist/used by {emp_id}")
             return
+        #if not adding new data to employee_asset
         assets = Employee_Asset(
             asset_serial=serial,
             employee_id=emp_id,
             asset_type=asset_t,
-            first_using_date=fdate,
-            last_using_date=ldate,
+            first_using_date=validate_fdate,
+            last_using_date=validate_ldate,
         )
-
+        #add values to db
         db.session.add(assets)
         db.session.flush()
 
-
-        if not ldate or ldate.strip() == "":
+        #verifying last_scan_date
+        if not validate_ldate:
             assets_to_existence_check = Asset_Existence (
                 employee_id = emp_id,
                 asset_serial = serial
             )
+
+            asset_feedback = Temp_User_feedback(
+                employee_id = emp_id,
+                asset_serial = serial
+            )
+
             db.session.add(assets_to_existence_check)
+            db.session.add(asset_feedback)
             click.echo(f"Asset {asset_t} is Curently with {emp_id}")
+            click.echo("important informations also sent to feedback table")
         else:
             click.echo(f"Asset {asset_t} was returned by {emp_id} in {ldate}")
 

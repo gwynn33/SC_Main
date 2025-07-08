@@ -1,11 +1,12 @@
 from blueprints.database import db 
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import UserMixin 
+from flask_login import UserMixin # ich liebe dich you make the current user simple
 from datetime import datetime
 try:
     class Employees(db.Model):
         __tablename__ = 'employees'
         employee_id = db.Column(db.Integer,primary_key=True)
+        admin_id = db.Column(db.Integer,db.ForeignKey('admin_account.admin_id'),nullable=True)
         employee_fullname = db.Column(db.String(30),nullable=False)
         employee_email = db.Column(db.String(60),nullable=False,unique=True)
 
@@ -35,7 +36,7 @@ try:
         def __repr__(self): 
             return f"<existence : {self.existence}>"
 
-    class Admin_Account(db.Model,UserMixin): #ach hadchiiii !!!!!!
+    class Admin_Account(db.Model,UserMixin): #when we call the current_iser and it's recognized that's because of the Usermixin here !
         __tablename__ = 'admin_account'
         admin_id = db.Column(db.Integer,primary_key=True)
         admin_email = db.Column(db.String(60))
@@ -91,9 +92,9 @@ try:
         feedback_id = db.Column(db.Integer,autoincrement=True,primary_key = True)
         asset_serial = db.Column(db.String(30),db.ForeignKey('asset_existence.asset_serial'))
         employee_id = db.Column(db.Integer,db.ForeignKey('employees.employee_id'))
-        asset_temperature  = db.Column(db.String(10),nullable=False)
-        asset_noise = db.Column(db.String(10),nullable=False)
-        asset_state = db.Column(db.String(512),nullable=False)
+        asset_temperature  = db.Column(db.String(10))
+        asset_noise = db.Column(db.String(10))
+        asset_state = db.Column(db.String(512),default=None)
 
         def __repr__(self):
             return f"<asset serial is : {asset_serial}"

@@ -15,6 +15,19 @@
 
         </div>
     </div>
+    <!-- popup -->
+    <div id="popup-overlay" class="popup-overlay">
+      <div class="card text-center mx-auto">
+        <div class="icon-wrapper icon-check mx-auto">
+          <svg class="icon-svg-check" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+        </div>
+        <h2 class="message-title">Scanning completed!</h2>
+        <p class="message-desc">Congrats! Your scan successfully done</p>
+        <button id="close-popup" class="btn button-ok" type="button"><a class="redirect" href="{{url_for('admin_bp.admin')}}">Ok</a></button>
+      </div>
+    </div>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="/js/scanning_page.js">
     </script>

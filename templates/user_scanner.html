@@ -1,0 +1,54 @@
+{% extends "base_html/base1.html" %}
+{% block title %}Qr Scanner{% endblock %}
+
+{% block head_content %}
+    <link rel="stylesheet" href="/css/user_scanning_page.css">
+    <link rel="stylesheet" href="/css/feedback.css">
+{% endblock %}
+{% block content %}
+    <nav class="nav-bar">
+        <div class="elements">
+            <a href="#"><img src="/media/logo.svg" alt=""></a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div id="camera_container" class="info-container">
+        </div>
+    </div>
+    <!-- let the popup here  -->
+     <div id="feedbackOverlay" class="popup-overlay">
+  <div class="popup-card">
+    <button id="closePopupBtn" class="popup-close">&times;</button>
+    <h2 class="popup-title">Feedback</h2>
+    <p class="popup-desc">We’d love to hear your thoughts about your experience with our <strong style="color: #354024;">Asset</strong>.</p>
+
+    <form id="feedbackForm">
+      <div class="popup-group">
+        <label>Asset Temperature:</label><br>
+        <label><input type="radio" name="temperature" value="Normal" required> Normal</label><br>
+        <label><input type="radio" name="temperature" value="Hot"> Hot</label><br>
+        <label><input type="radio" name="temperature" value="Very Hot"> Very Hot</label>
+      </div>
+
+      <div class="popup-group">
+        <label>Asset Noise:</label><br>
+        <label><input type="radio" name="noise" value="Low" required> Low</label><br>
+        <label><input type="radio" name="noise" value="Moderate"> Moderate</label><br>
+        <label><input type="radio" name="noise" value="High"> High</label>
+      </div>
+
+      <div class="popup-group">
+        <label for="assetState">Asset State:</label><br>
+        <textarea id="assetState" name="asset_state" required placeholder="Describe the asset condition..."></textarea>
+      </div>
+
+      <button type="submit" class="popup-submit">Send Feedback</button>
+    </form>
+  </div>
+</div>
+
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="/js/user_scanner.js"></script>
+
+{% endblock %}
