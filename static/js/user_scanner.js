@@ -137,7 +137,7 @@ document.getElementById('feedbackForm').addEventListener("submit", function(e) {
         .then(fdata => {
             if (fdata.success) {
                 console.log("DATA IS SENT SUCCESSFULLY!");
-                window.location.href = "/User/page/scanner";
+                window.location.href = "/User/page";
             } else {
                 throw new Error(fdata.message || fdata.error || "UNKNOWN ERROR!");
             }

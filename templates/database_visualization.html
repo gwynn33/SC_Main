@@ -1,0 +1,158 @@
+{% extends "base_html/base1.html" %}
+{% block css_file %}
+    <link rel="stylesheet" href="/css/database_visualization.css">
+    <link rel="stylesheet" href="/css/datavisual_popup.css">
+{% endblock %}              
+{% block boxicon %}
+    <link rel="shortcut icon" href="/media/favicon-32x32.png" type="image/x-icon">
+{% endblock %}
+{% block title %}
+    Asset's list
+{% endblock %}
+{% block content %}
+    <div class="table-container">
+        <div class="button-container">
+            <button class="btn-nature add-employee" type="button" onclick="openPopup()">
+                Add Employee and Asset
+            </button>
+            <button class="btn-nature add-asset" type="button">
+                Export
+            </button>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search" onkeyup="filterTable()">
+        </div>
+        <table class="data-table" id="dataTable">
+           <thead>
+               <tr>
+                   <th>Employee ID</th>
+                   <th>Fullname</th>
+                   <th>Asset</th>
+                   <th>Serial</th>
+                   <th>Status</th>
+                    <th>Last Verification Date</th>
+               </tr>
+           </thead>
+           <tbody>
+               {% for record in employee_assets %}
+               <tr>
+                   <td>{{ record.employee_id }}</td>
+                   <td>{{ record.employee_fullname }}</td>
+                   <td><span class="asset-type">{{ record.asset_type }}</span></td>
+                   <td><span class="serial-number">{{ record.asset_serial }}</span></td>
+                   <td>{{ record.existence }}</td>
+                   <td>{{ record.last_scan_date }}</td>
+               </tr>
+               {% endfor %}
+           </tbody>
+        </table>
+    </div>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <div class="popup-header">
+                <h2 class="popup-title">🌱 Add New Record</h2>
+                <p class="popup-subtitle">Create employee profiles and manage assets</p>
+                <button class="close-btn" onclick="closePopup()">&times;</button>
+                <div class="nature-decoration">🍃</div>
+                <div class="floating-leaf">🌿</div>
+                <div class="floating-leaf">🍀</div>
+                <div class="floating-leaf">🌱</div>
+            </div>
+            
+            <div class="popup-body">
+                <div class="form-tabs">
+                    <button class="tab-button active" onclick="switchTab('employee')">
+                        👤 Employee
+                    </button>
+                    <button class="tab-button" onclick="switchTab('asset')">
+                        📱 Asset
+                    </button>
+                </div>
+                
+                <div class="tab-content active" id="employee-tab">
+                    <form id="employeeForm">
+                        <div class="form-group">
+                            <label class="form-label">Employee ID</label>
+                            <input type="number" id="employee_id_emp_form" class="form-input" placeholder="Enter ID" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="employee_fullname" class="form-input" placeholder="Enter Fullname" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Adresse</label>
+                            <input type="email" id="employee_email" class="form-input" placeholder="Enter Email" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            🌟 Add Employee
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="tab-content" id="asset-tab">
+                    <form id="assetForm">
+                        <div class="form-group">
+                            <label class="form-label">Asset Serial Number</label>
+                            <input type="text"  id="asset_serial" class="form-input" placeholder="Enter serial number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Employee ID</label>
+                            <input type="number" id="employee_id_asset_form"  class="form-input" placeholder="Enter employee ID " required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Asset Type</label>
+                            <input type="text" id="asset_type"  class="form-input" placeholder="Enter asset type" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">First Using Date</label>
+                                    <input type="date" id="first_using_date" class="form-input" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">Last Using Date</label>
+                                    <input type="date" id="last_using_date" class="form-input">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            📦 Add Asset
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function filterTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("dataTable");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+              const cells = rows[i].getElementsByTagName("td");
+              let match = false;
+            
+              for (let j = 0; j < cells.length - 1; j++) {
+                if (cells[j].textContent.toLowerCase().includes(filter)) {
+                  match = true;
+                  break;
+                }
+              }   
+              rows[i].style.display = match ? "" : "none";
+            }
+        }
+    </script>
+    <script src="/js/database_visual.js">
+
+    </script>
+{% endblock %}

@@ -1,0 +1,279 @@
+/* Container with nature vibes */
+.table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+/* Table with organic feel */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.1);
+}
+
+/* Emerald gradient header */
+.data-table thead th {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #43a047 100%);
+    color: #ffffff;
+    padding: 18px 16px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+    border: none;
+    position: relative;
+}
+
+/* Subtle leaf pattern overlay */
+.data-table thead th::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 Q50,5 80,20 Q65,50 80,80 Q50,65 20,80 Q35,50 20,20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+    background-size: 40px 40px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Table body with forest tones */
+.data-table tbody {
+    background: #fafafa;
+}
+
+.data-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+    color: #2e4830;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Alternating rows with subtle green tints */
+.data-table tbody tr:nth-child(even) {
+    background: linear-gradient(90deg, #f1f8e9 0%, #f9fbe7 100%);
+}
+
+.data-table tbody tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+/* Hover effect with emerald glow */
+.data-table tbody tr:hover {
+    background: linear-gradient(90deg, #e8f5e8 0%, #f0f8f0 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+}
+
+.data-table tbody tr:hover td {
+    color: #1b5e20;
+    border-bottom-color: rgba(76, 175, 80, 0.3);
+}
+
+/* Employee ID with emerald accent */
+.data-table tbody td:first-child {
+    font-weight: 700;
+    color: #2e7d32;
+    border-left: 3px solid #4caf50;
+    padding-left: 13px;
+}
+
+/* Employee name with nature styling */
+.data-table tbody td:nth-child(2) {
+    font-weight: 600;
+    color: #1b5e20;
+    position: relative;
+}
+
+/* Asset type with leaf-like badge */
+.asset-type {
+    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.asset-type::before {
+    content: '🍃';
+    margin-right: 4px;
+}
+
+/* Serial number with natural monospace */
+.serial-number {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+    color: #2e4830;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    box-shadow: inset 0 1px 3px rgba(46, 125, 50, 0.1);
+}
+
+/* No data message with nature theme */
+.no-data {
+    text-align: center;
+    color: #558b2f;
+    font-style: italic;
+    padding: 60px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 100%);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.no-data::before {
+    content: '🌿';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+/* Mobile responsive with nature touch */
+@media (max-width: 768px) {
+    .table-container {
+        margin: 15px;
+        padding: 20px;
+    }
+    
+    .data-table {
+        font-size: 12px;
+    }
+    
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 10px 8px;
+    }
+    
+    .asset-type {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+}
+
+/* Add subtle animations */
+@keyframes leafSway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(2deg); }
+}
+
+.data-table tbody tr:hover .asset-type::before {
+    animation: leafSway 2s ease-in-out infinite;
+}
+
+/* Optional: Add a subtle pattern background to container */
+.table-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><path d="M15,15 Q30,5 45,15 Q35,30 45,45 Q30,35 15,45 Q25,30 15,15" fill="none" stroke="rgba(76,175,80,0.05)" stroke-width="1"/></svg>');
+    background-size: 60px 60px;
+    opacity: 0.4;
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px;
+}
+.toggle-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-track {
+  width: 40px;
+  height: 20px;
+  background-color: #d1d5db; /* gray-300 */
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+}
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.toggle-input:checked + .toggle-track {
+  background-color: #65a30d; /* lime-600 */
+}
+.toggle-input:checked + .toggle-track + .toggle-thumb {
+  transform: translateX(20px);
+}
+.toggle-input:focus + .toggle-track {
+  outline: 2px solid #84cc16; /* lime-500 */
+  outline-offset: 2px;
+}
+
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .search-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    /* Search input styling */
+    #searchInput {
+      border: 1px solid #bef264; /* lime-300 */
+      border-radius: 6px;
+      padding: 8px 12px;
+      width: 100%;
+      max-width: 256px;
+      font-size: 14px;
+      color: #4b5563; /* gray-600 */
+    }
+
+    #searchInput::placeholder {
+      color: #9ca3af; /* gray-500 */
+    }
+
+    #searchInput:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #84cc16; /* lime-500 */
+    }

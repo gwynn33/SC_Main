@@ -11,6 +11,7 @@ from blueprints.temp_login_user.temp_login_bp import temp_login_bp
 from blueprints.temp_user_page.temp_user_page_bp import temp_user_page_bp
 from blueprints.temp_login_user.temp_login_bp import temp_logout_bp
 from blueprints.user_scanner.user_scanner_bp import user_scanner_bp
+from blueprints.database_visualisation.database_visualization import database_visualization_bp
 from blueprints.database import db 
 from flask import Flask,session
 from flask_migrate import Migrate
@@ -48,11 +49,11 @@ def create_app():
         except ValueError:
             return None
         
-        admin = Admin_Account.query.get(user_id) ## maybe we gonna cast it based on it's type
+        admin = Admin_Account.query.get(int(user_id)) ## maybe we gonna cast it based on it's type
         if admin: 
             return admin
         
-        temp_user = Temp_User_Account.query.get(user_id)
+        temp_user = Temp_User_Account.query.get(int(user_id))
         if temp_user:
             return temp_user
         
@@ -72,6 +73,7 @@ def create_app():
     app.register_blueprint(temp_user_page_bp)
     app.register_blueprint(temp_logout_bp)
     app.register_blueprint(user_scanner_bp)
+    app.register_blueprint(database_visualization_bp)
 
 
     #migrate
@@ -220,6 +222,7 @@ def create_app():
             )
 
             db.session.add(assets_to_existence_check)
+            db.session.flush()
             db.session.add(asset_feedback)
             click.echo(f"Asset {asset_t} is Curently with {emp_id}")
             click.echo("important informations also sent to feedback table")
@@ -278,6 +281,7 @@ def create_app():
     return app
 
 app = create_app()
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port='5555',debug=True)
