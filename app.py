@@ -41,7 +41,7 @@ def create_app():
     login_manager.login_view = 'main_bp.main'
     login_manager.login_message = "Please log in to access this page !"
     
-    # ach hadchi ?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # this is a function which separete between auth
     @login_manager.user_loader
     def load_user(user_id):
         try:
@@ -49,7 +49,8 @@ def create_app():
         except ValueError:
             return None
         
-        admin = Admin_Account.query.get(int(user_id)) ## maybe we gonna cast it based on it's type
+        admin = Admin_Account.query.get(int(user_id))
+        """maybe we gonna cast it based on it's type , i still need to modify it in future (type distinction)"""
         if admin: 
             return admin
         
@@ -58,9 +59,9 @@ def create_app():
             return temp_user
         
         return None
-
-    
-    #routes
+        
+        
+    #bleuprints registrations
     app.register_blueprint(main_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
@@ -79,7 +80,7 @@ def create_app():
     #migrate
     migrate = Migrate(app,db)
     #Cli commands to avoid sql injection (maybe!)
-    #COMMAND WITH NO SENS JUST TO FIX A LITTLE PROBLEM
+    # COMMAND WITH NO SENS STILL NEED REVISION :()
     @app.cli.command('set-admin')
     @click.argument('identity',type=int)
     @with_appcontext
