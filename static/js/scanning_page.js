@@ -1,6 +1,3 @@
-// const element = document.getElementById("camera_container__scan_region");
-// element.style.width = "0px";
-//Qr scanner handeling
 function Qrscanner() {
     try {
         function parsingQrdata(qrtext) {
@@ -16,7 +13,9 @@ function Qrscanner() {
         }
 
         function success_scanning(decodedtext,decodedresult) {
+            console.log(decodedtext,"this is the qr data");
             const objdata =  parsingQrdata(decodedtext);
+            console.log(objdata,"this is the parsed data");
                 setTimeout(() => {
                     scanner.clear();
                 }, 4000);

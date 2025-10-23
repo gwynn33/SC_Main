@@ -6,14 +6,6 @@ import datetime
 
 scanning_bp = Blueprint('scanning_bp',__name__)
 
-def parse_data(qr_string):
-    data = {}
-    parts = qr_string.split(',')
-    for part in parts:
-        if ':' in part:
-            key,value = part.split(':',1)
-            data[key.strip()] = value.strip()
-    return data
 
 @scanning_bp.route('/scanning',methods=['GET','PUT'])
 @login_required
