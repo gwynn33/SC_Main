@@ -30,7 +30,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     #Session Key 
-    app.config['SECRET_KEY'] = secrets.token_urlsafe(32)
+    #app.config['SECRET_KEY'] = secrets.token_urlsafe(32)
     
     #linking the app with the database
     db.init_app(app)
@@ -80,7 +80,6 @@ def create_app():
     #migrate
     migrate = Migrate(app,db)
     #Cli commands to avoid sql injection (maybe!)
-    # COMMAND WITH NO SENS STILL NEED REVISION :()
     @app.cli.command('set-admin')
     @click.argument('identity',type=int)
     @with_appcontext

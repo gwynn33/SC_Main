@@ -61,6 +61,7 @@ def user_scanner():
 
 
                     else:
+                        #when we scan for the first time case :)
                         user_update = Asset_Existence (
                             employee_id = user_id,
                             asset_serial = serial,
